@@ -1,3 +1,5 @@
+const gridDisplay = document.getElementById("grid");
+
 //creating an array of pair of matching cards which are actually objects so array of objects
 const cardArray = [
     {
@@ -50,3 +52,19 @@ const cardArray = [
     }
 ];
 
+//randomly sorting the above array
+cardArray.sort(()=>{
+    0.5-Math.random();
+});
+
+function createBoard(){
+    for(let i = 0; i<10; i++){
+        const card = document.createElement("img");
+        card.setAttribute("src","images/blank.png");
+        card.setAttribute("data-id",i);
+        //adding the img elements cards into the div element in each iteration of the loop
+        gridDisplay.append(card);
+    }
+}
+
+createBoard();
