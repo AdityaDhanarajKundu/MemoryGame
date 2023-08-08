@@ -53,18 +53,23 @@ const cardArray = [
 ];
 
 //randomly sorting the above array
-cardArray.sort(()=>{
-    0.5-Math.random();
-});
+cardArray.sort(()=> 0.5-Math.random());
 
 function createBoard(){
-    for(let i = 0; i<10; i++){
+    for(let i = 0; i<cardArray.length; i++){
         const card = document.createElement("img");
         card.setAttribute("src","images/blank.png");
         card.setAttribute("data-id",i);
+        card.addEventListener("click",flipCard)
         //adding the img elements cards into the div element in each iteration of the loop
         gridDisplay.append(card);
     }
 }
 
 createBoard();
+
+function flipCard(){
+    const cardId = this.getAttribute("data-id"); //to get the data id of the card currently clicked
+    console.log(cardArray[cardId].name);
+    console.log("card clicked",cardId);
+}
