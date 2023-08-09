@@ -1,6 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: #494F55;
+}
+
+main{
+    text-align: center;
+}
+
+#container{
+    background: #ffe4e1;
+    box-sizing: border-box;
+    margin: 200px 100px;
+    height: 400px;
+    width: 800px;
+    border-radius: 10px;
+}
+
 #grid{
     width: 400px;
     height: 300px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding-left: 190px;
+}
+
+footer{
+    text-align: center;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: larger;
+}
+
+footer a{
+    text-decoration: none;
+    color: chocolate;
+    border: none;
 }
