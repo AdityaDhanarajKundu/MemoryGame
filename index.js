@@ -1,4 +1,5 @@
 const gridDisplay = document.getElementById("grid");
+const resultEl = document.getElementById("result");
 
 //creating an array of pair of matching cards which are actually objects so array of objects
 const cardArray = [
@@ -52,6 +53,10 @@ const cardArray = [
     }
 ];
 
+let cardsChosen = []; //store the names of the cards player has clicked
+let cardsChosenId = []; //stores the ids of the cards player has clicked on 
+let cardsWon = []; //stores the cards which were matched
+
 //randomly sorting the above array
 cardArray.sort(()=> 0.5-Math.random());
 
@@ -68,8 +73,53 @@ function createBoard(){
 
 createBoard();
 
+function checkMatch(){
+    resultEl.textContent="";
+    //creating an array selecting all the cards ie the image elements
+    const cards = document.querySelectorAll("img");
+    console.log("check for match");
+
+    let firstId = cardsChosenId[0];
+    let secondId = cardsChosenId[1];
+
+    if(firstId==secondId){
+        resultEl.textContent="You have clicked the same card!!";
+    }
+     
+    else if(cardsChosen[0]===cardsChosen[1]){
+        resultEl.textContent="You have found a match";
+        //changing the color of the matched cards to distinguish from other cards
+        cards[firstId].setAttribute("src","images/white.png");
+        cards[secondId].setAttribute("src","images/white.png");
+
+        //removing the actionListener from the two selected cards so that they cant be clicked once again
+        cards[firstId].removeEventListener("click",flipCard);
+        cards[secondId].removeEventListener("click",flipCard);
+
+        cardsWon.push(cardsChosen);
+    }
+    else{
+        cards[firstId].setAttribute("src","images/blank.png");
+        cards[secondId].setAttribute("src","images/blank.png");
+        resultEl.textContent="Not a match! Try again!";
+    }
+    cardsChosen = [];
+    cardsChosenId = [];
+}
+
 function flipCard(){
     const cardId = this.getAttribute("data-id"); //to get the data id of the card currently clicked
-    console.log(cardArray[cardId].name);
-    console.log("card clicked",cardId);
+    //to get the card we clicked and confirm it got matched
+    cardsChosen.push(cardArray[cardId].name);
+    //changing the image of the clicked card to reveal what color it is actually
+    this.setAttribute("src",cardArray[cardId].img);
+
+    //pushing the id of the clicked card to the cardsChosenID array
+    cardsChosenId.push(cardId);
+
+    //When there are two cards in the choosen array, we should check if they matches or not
+    if(cardsChosen.length===2){
+        //using the setTimeout function to schedule a specified function to execute after a given time
+        setTimeout(checkMatch,500); //scheduling the checkMatch function to execute after 5 milliseconds
+    }
 }
