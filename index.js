@@ -1,5 +1,6 @@
 const gridDisplay = document.getElementById("grid");
 const resultEl = document.getElementById("result");
+const scoreEl = document.getElementById("score");
 
 //creating an array of pair of matching cards which are actually objects so array of objects
 const cardArray = [
@@ -84,6 +85,8 @@ function checkMatch(){
 
     if(firstId==secondId){
         resultEl.textContent="You have clicked the same card!!";
+        cards[firstId].setAttribute("src","images/blank.png");
+        cards[secondId].setAttribute("src","images/blank.png");
     }
      
     else if(cardsChosen[0]===cardsChosen[1]){
@@ -96,7 +99,7 @@ function checkMatch(){
         cards[firstId].removeEventListener("click",flipCard);
         cards[secondId].removeEventListener("click",flipCard);
 
-        cardsWon.push(cardsChosen);
+        cardsWon.push(cardsChosen[0]);
     }
     else{
         cards[firstId].setAttribute("src","images/blank.png");
@@ -105,6 +108,14 @@ function checkMatch(){
     }
     cardsChosen = [];
     cardsChosenId = [];
+    scoreEl.textContent = cardsWon.length;
+
+    if(cardsWon.length===(cardArray.length/2)){
+        resultEl.textContent="Congratulations You got them all !!!\nGame Over";
+        cards.forEach((elements)=>{
+            elements.setAttribute("src","images/blank.png");
+        });
+    }
 }
 
 function flipCard(){
